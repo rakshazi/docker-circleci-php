@@ -1,4 +1,4 @@
-# circleci/php:7.2-fpm + exts
+# circleci/php:7.3-fpm + exts
 
 * crypto
 * curve25519

@@ -1,9 +1,9 @@
-FROM circleci/php:7.2-fpm
+FROM circleci/php:7.3-fpm
 
 USER root
 
 # system packages and base php exts
-RUN apt-get update && \
+RUN apt-get update && apt-get dist-upgrade && \
     apt-get install zlib1g-dev libsqlite3-dev build-essential libssl-dev libxml2-dev protobuf-compiler && \
     docker-php-ext-install zip pdo_mysql dom fileinfo hash iconv json simplexml tokenizer
 # php crypto ext
