@@ -48,4 +48,5 @@ COPY config/php/php-fpm.d /usr/local/etc/php-fpm.d
 COPY config/nginx /etc/nginx
 RUN chmod +x /bin/starter
 
+EXPOSE 8000 8080
 USER circleci
