@@ -2,9 +2,19 @@ FROM circleci/php:7.3-fpm
 
 USER root
 
-# system packages and base php exts
-RUN apt-get update && apt-get dist-upgrade && \
-    apt-get install zlib1g-dev libsqlite3-dev build-essential libssl-dev libxml2-dev protobuf-compiler nginx && \
+ENV NVM_DIR "/opt/nvm"
+
+# dist upgrade
+RUN apt-get update && apt-get dist-upgrade
+# node.js deps
+COPY nvm-install.sh /root/nvm-install.sh
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5DC22404A6F9F1CA && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 78BD65473CB3BD13 && \
+    mkdir -p $NVM_DIR && chmod +x /root/nvm-install.sh && /root/nvm-install.sh && \
+    \. $NVM_DIR/nvm.sh && nvm install v10.16.0 && nvm use v10.16.0 && \
+    echo ". $NVM_DIR/nvm.sh" >> /home/circleci/.bashrc
+# php system deps
+RUN apt-get install zlib1g-dev libsqlite3-dev build-essential libssl-dev libxml2-dev protobuf-compiler nginx && \
     docker-php-ext-install zip pdo_mysql dom fileinfo hash iconv json simplexml tokenizer && \
     rm -rf /usr/local/etc/php-fpm.d/* && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
