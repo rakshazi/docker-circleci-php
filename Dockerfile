@@ -14,7 +14,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5DC22404A6F9F1CA &&
     \. $NVM_DIR/nvm.sh && nvm install v10.16.0 && nvm use v10.16.0 && \
     echo ". $NVM_DIR/nvm.sh" >> /home/circleci/.bashrc
 # php system deps
-RUN apt-get install zlib1g-dev libsqlite3-dev build-essential libssl-dev libxml2-dev protobuf-compiler nginx jq && \
+RUN apt-get install zlib1g-dev libsqlite3-dev build-essential libssl-dev libxml2-dev protobuf-compiler nginx jq aws-cli && \
     docker-php-ext-install zip pdo_mysql dom fileinfo hash iconv json simplexml tokenizer && \
     rm -rf /usr/local/etc/php-fpm.d/* && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
